@@ -6,7 +6,7 @@ Alcoholic liver disease treatment effects
 - Analytics use case(s): **Characterization, Population-Level Estimation**
 - Study type: **Clinical Application**
 - Tags: **Liver, Alcoholic liver disease, Drug, Gender**
-- Study lead: **Andreas Teufel, Prof. Dr. Dr., Medical Fakulty Mannheim, University Heidelberg, Germany**
+- Study lead: **Prof. Dr. Dr. Andreas Teufel, Medical Faculty Mannheim, Heidelberg University, Germany**
 - Study lead forums tag: **[[Lead tag]](https://forums.ohdsi.org/u/[Lead tag])**
 - Study start date: **-**
 - Study end date: **-**
@@ -35,7 +35,21 @@ How to run
 
   ```r
       library(AlcoholicLiverDisease)
-      connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "sql server", server = "localhost", user = "SA", password = "App1app1", schema="TEST", port = "1433")
-      data <- execute(connectionDetails, resultsSchema="results", studyName="STUDY", sourceName="sourceName")
+      
+      connectionDetails <- DatabaseConnector::createConnectionDetails(
+          dbms = "sql server", 
+          server = "localhost", 
+          user = "SA", 
+          password = "App1app1", 
+          schema="TEST", 
+          port = "1433"
+      )
+      
+      execute(
+          connectionDetails,
+          resultsSchema="results",
+          studyName="STUDY",
+          sourceName="sourceName"
+      )
   ```
 4. Once the execution finished, the results will placed as ZIP files inside the tempdirectory of the R session. Please send them back to the study coordinator.
