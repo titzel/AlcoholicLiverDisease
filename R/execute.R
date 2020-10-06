@@ -15,7 +15,7 @@ execute <- function(connectionDetails, resultsSchema, studyName, sourceName) {
 	        sql <- prepareSql(connectionDetails$dbms,
 	                    cdmSchema=connectionDetails$schema, resultsSchema=resultsSchema, 
 	                    studyName=studyName, sourceName=sourceName, 
-	                    inputFile=system.file("sql", "cleanup.sql", package="ALD.Mannheim", mustWork=TRUE),
+	                    inputFile=system.file("sql", "cleanup.sql", package="AlcoholicLiverDisease", mustWork=TRUE),
 	                    outputFile=file.path(tempdir(), sprintf("cleanup_%s_%s.sql", connectionDetails$dbms, studyName))
 	        )
 	        DatabaseConnector::executeSql(conn, SqlRender::readSql(sql))
@@ -76,7 +76,7 @@ execute <- function(connectionDetails, resultsSchema, studyName, sourceName) {
 	    summary_survival(population.female, file.path(studyName, sourceName, "summary", "female"))
 
 	    ### Ingredients / DRUGs analysis
-	    ingredients_select <- read.delim(system.file("lists", "Ingredients.csv", package="ALD.Mannheim", mustWork=T))
+	    ingredients_select <- read.delim(system.file("lists", "Ingredients.csv", package="AlcoholicLiverDisease", mustWork=T))
 	    ingredients_select <- ingredients[ingredients$INGREDIENT_CONCEPT_ID %in% ingredients_select$concept_id,]
 	    ingredients_survival(population, ingredients_select, file.path(studyName, sourceName, "drugs", "complete"))
 	    ingredients_survival(population.male, ingredients_select, file.path(studyName, sourceName, "drugs", "male"))
@@ -100,7 +100,7 @@ execute <- function(connectionDetails, resultsSchema, studyName, sourceName) {
 	    #### zip data
 	    cat(sprintf("***************************\nStart Zip file at %s\n", format(Sys.time(), "%Y-%m-%d_%H-%M_%Z")))
 	    old <- setwd(tempdir())
-	    zipFile <- sprintf("ALD.Mannheim_%s_%s_%s.zip", sourceName, studyName, format(Sys.time(), "%Y-%m-%d_%H-%M_%Z"))
+	    zipFile <- sprintf("AlcoholicLiverDisease_%s_%s_%s.zip", sourceName, studyName, format(Sys.time(), "%Y-%m-%d_%H-%M_%Z"))
 	    if(file.exists(zipFile)) file.remove(zipFile)
 	    zip(zipFile, files=sprintf(file.path(".", "%s"), studyName));
 	    cat(sprintf("***************************\nZip file of results can be found in %s\nnamed: %s\n", tempdir(), zipFile))
@@ -111,8 +111,8 @@ execute <- function(connectionDetails, resultsSchema, studyName, sourceName) {
 	}
 
 	
-	execute(connectionDetails, resultsSchema, sprintf("%s_nohep", studyName), sourceName, inputFile=system.file("sql", "ald-mannheim-no-hepatitis.sql", package="ALD.Mannheim", mustWork=TRUE))
-	execute(connectionDetails, resultsSchema, sprintf("%s_hepB", studyName), sourceName, inputFile=system.file("sql", "ald-mannheim-hepatitis-b.sql", package="ALD.Mannheim", mustWork=TRUE))
-	execute(connectionDetails, resultsSchema, sprintf("%s_hepC", studyName), sourceName, inputFile=system.file("sql", "ald-mannheim-hepatitis-c.sql", package="ALD.Mannheim", mustWork=TRUE))
+	execute(connectionDetails, resultsSchema, sprintf("%s_nohep", studyName), sourceName, inputFile=system.file("sql", "ald-mannheim-no-hepatitis.sql", package="AlcoholicLiverDisease", mustWork=TRUE))
+	execute(connectionDetails, resultsSchema, sprintf("%s_hepB", studyName), sourceName, inputFile=system.file("sql", "ald-mannheim-hepatitis-b.sql", package="AlcoholicLiverDisease", mustWork=TRUE))
+	execute(connectionDetails, resultsSchema, sprintf("%s_hepC", studyName), sourceName, inputFile=system.file("sql", "ald-mannheim-hepatitis-c.sql", package="AlcoholicLiverDisease", mustWork=TRUE))
 
 }
